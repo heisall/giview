@@ -1,0 +1,263 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18CD2FAE185C549D00BA43F1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18CD2FAD185C549D00BA43F1 /* OpenGLES.framework */; };
+		18D367A0185C516F0077D563 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D3679F185C516F0077D563 /* Foundation.framework */; };
+		18D367A5185C51700077D563 /* GlView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 18D367A4185C51700077D563 /* GlView.h */; };
+		18D367A7185C51700077D563 /* GlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D367A6185C51700077D563 /* GlView.m */; };
+		AD84CE7A1A5E6EF4002A514A /* OpenGLView20.m in Sources */ = {isa = PBXBuildFile; fileRef = AD84CE791A5E6EF4002A514A /* OpenGLView20.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		18D3679A185C516F0077D563 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				18D367A5185C51700077D563 /* GlView.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		18CD2FAD185C549D00BA43F1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		18D3679C185C516F0077D563 /* libGlView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGlView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		18D3679F185C516F0077D563 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		18D367A3185C51700077D563 /* GlView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GlView-Prefix.pch"; sourceTree = "<group>"; };
+		18D367A4185C51700077D563 /* GlView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlView.h; sourceTree = "<group>"; };
+		18D367A6185C51700077D563 /* GlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlView.m; sourceTree = "<group>"; };
+		AD84CE781A5E6EF4002A514A /* OpenGLView20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView20.h; sourceTree = "<group>"; };
+		AD84CE791A5E6EF4002A514A /* OpenGLView20.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLView20.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18D36799185C516F0077D563 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18CD2FAE185C549D00BA43F1 /* OpenGLES.framework in Frameworks */,
+				18D367A0185C516F0077D563 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18D36793185C516E0077D563 = {
+			isa = PBXGroup;
+			children = (
+				18CD2FAD185C549D00BA43F1 /* OpenGLES.framework */,
+				18D367A1185C516F0077D563 /* GlView */,
+				18D3679E185C516F0077D563 /* Frameworks */,
+				18D3679D185C516F0077D563 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		18D3679D185C516F0077D563 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18D3679C185C516F0077D563 /* libGlView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18D3679E185C516F0077D563 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18D3679F185C516F0077D563 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		18D367A1185C516F0077D563 /* GlView */ = {
+			isa = PBXGroup;
+			children = (
+				AD84CE781A5E6EF4002A514A /* OpenGLView20.h */,
+				AD84CE791A5E6EF4002A514A /* OpenGLView20.m */,
+				18D367A4185C51700077D563 /* GlView.h */,
+				18D367A6185C51700077D563 /* GlView.m */,
+				18D367A2185C51700077D563 /* Supporting Files */,
+			);
+			path = GlView;
+			sourceTree = "<group>";
+		};
+		18D367A2185C51700077D563 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				18D367A3185C51700077D563 /* GlView-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18D3679B185C516F0077D563 /* GlView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18D367AA185C51700077D563 /* Build configuration list for PBXNativeTarget "GlView" */;
+			buildPhases = (
+				18D36798185C516F0077D563 /* Sources */,
+				18D36799185C516F0077D563 /* Frameworks */,
+				18D3679A185C516F0077D563 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlView;
+			productName = GlView;
+			productReference = 18D3679C185C516F0077D563 /* libGlView.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18D36794185C516E0077D563 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = jovision;
+			};
+			buildConfigurationList = 18D36797185C516F0077D563 /* Build configuration list for PBXProject "GlView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 18D36793185C516E0077D563;
+			productRefGroup = 18D3679D185C516F0077D563 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18D3679B185C516F0077D563 /* GlView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18D36798185C516F0077D563 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18D367A7185C51700077D563 /* GlView.m in Sources */,
+				AD84CE7A1A5E6EF4002A514A /* OpenGLView20.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		18D367A8185C51700077D563 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		18D367A9185C51700077D563 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		18D367AB185C51700077D563 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GlView.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GlView/GlView-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Debug;
+		};
+		18D367AC185C51700077D563 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GlView.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GlView/GlView-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18D36797185C516F0077D563 /* Build configuration list for PBXProject "GlView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18D367A8185C51700077D563 /* Debug */,
+				18D367A9185C51700077D563 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18D367AA185C51700077D563 /* Build configuration list for PBXNativeTarget "GlView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18D367AB185C51700077D563 /* Debug */,
+				18D367AC185C51700077D563 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18D36794185C516E0077D563 /* Project object */;
+}

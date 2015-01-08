@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'GlView' target in the 'GlView' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

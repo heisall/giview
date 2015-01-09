@@ -9,8 +9,9 @@
 #import "OpenGLView20.h"
 
 #define MIN_LENGTH 4.0
-#define MAX_WIDTH  3000
+#define MAX_WIDTH 3000
 #define MAX_HEIGHT 3000
+#define SIZE self.bounds.size
 
 enum AttribEnum
 {
@@ -79,6 +80,25 @@ CGPoint pinch_start_point2;
 //        printf("%d   \n", r);
 //    }
 //}
+
+//-(void)setFrame:(CGRect)frame{
+//    [super setFrame:frame];
+//    [self initViewport];
+//    viewport_width = frame.size.width*_viewScale;
+//    viewport_height = frame.size.height*_viewScale;
+//    _x = 0;
+//    _y = 0;
+//    NSLog(@"viewport width %d heigth %d",viewport_width,viewport_height);
+//    glViewport(_x, _y, viewport_width, viewport_height);
+//
+//}
+
+-(void)initViewport{
+    _viewScale = [UIScreen mainScreen].scale;
+    lastpinch_scale = 1.0;
+    scale = 1.0;
+}
+
 - (BOOL)doInit
 {
     CAEAGLLayer *eaglLayer = (CAEAGLLayer*) self.layer;
@@ -91,9 +111,9 @@ CGPoint pinch_start_point2;
                                     //[NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking,
                                     nil];
     self.contentScaleFactor = [UIScreen mainScreen].scale;
-    _viewScale = [UIScreen mainScreen].scale;
     
-    lastpinch_scale = 1.0;
+    [self initViewport];
+    
     _glContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     //[self debugGlError];
@@ -131,23 +151,30 @@ CGPoint last_pan_point;
     CGPoint point = [pan translationInView:self];
 //    NSLog(@"point x %f y %f",point.x,point.y);
     
-    int max_width = viewport_width - _videoW;
-    int max_height = viewport_height - _videoH;
+    int max_width = viewport_width - SIZE.width*_viewScale;
+    int max_height = viewport_height - SIZE.height*_viewScale;
+    
 //    NSLog(@"max width %d height %d",max_width,max_height);
 //    NSLog(@"%d %d",(_x + ((int)point.x)),(_y - ((int)point.y)));
     
+    
+    int tmp_x = _x + (point.x-last_pan_point.x)*_viewScale;
+    int tmp_y = _y - (point.y-last_pan_point.y)*_viewScale;
+    
+//    NSLog(@"width %d height %d x %d y %d viewport_width %d viewport_heigth %d",max_width,max_height,_x,_y,viewport_width,viewport_height);
+//    NSLog(@"videow %d videoh %d",_videoW,_videoH);
     switch (pan.state) {
         case UIGestureRecognizerStateChanged:
-            if(abs(_x + (int)point.x)<max_width)
-                _x = _x + (point.x-last_pan_point.x);
-            if (abs(_y - (int)point.y)<max_height)
-                _y = _y - (point.y-last_pan_point.y);
+                _x = tmp_x;
+                _y = tmp_y;
+            
             last_pan_point = point;
             break;
-            
-        default:
+         case UIGestureRecognizerStateEnded:
             last_pan_point.x = 0.0;
             last_pan_point.y = 0.0;
+            break;
+        default:
             break;
     }
     
@@ -158,12 +185,18 @@ CGPoint last_pan_point;
         _y = 0;
     }
     
-//    NSLog(@"pan gesture x %d y %d state %d",_x,_y,(int)pan.state);
+    if (_x<-max_width) {
+        _x = -max_width;
+    }
+    
+    if (_y<-max_height) {
+        _y = -max_height;
+    }
+    
     [self render];
 }
 
 CGFloat scale = 1.0;
-
 -(void)didPinchGesture:(UIPinchGestureRecognizer *)pinch
 {
     int touchCount = (int)pinch.numberOfTouches;
@@ -175,7 +208,7 @@ CGFloat scale = 1.0;
             case UIGestureRecognizerStateBegan:
                 scale = scale*lastpinch_scale;
                 break;
-            case UIGestureRecognizerStateChanged:
+            case UIGestureRecognizerStateEnded:
                 lastpinch_scale = pinch.scale;
                 break;
             default:
@@ -186,19 +219,25 @@ CGFloat scale = 1.0;
         p2 = [pinch locationOfTouch:1 inView:self];
         
         CGFloat center_x = (p1.x+p2.x)/2;
-        CGFloat center_y = (p2.y+p2.y)/2;
+        CGFloat center_y = (p1.y+p2.y)/2;
         
-        CGFloat width = _videoW*scale*pinch.scale;
-        CGFloat height = _videoH*scale*pinch.scale;
+        CGFloat width = SIZE.width*_viewScale*scale*pinch.scale;
+        CGFloat height = SIZE.height*_viewScale*scale*pinch.scale;
+       
         
+//        center_x = center_x*_viewScale;
+//        center_y = center_y*_viewScale;
+//        NSLog(@"center x %f y %f ",center_x,center_y);
+//        //新中心与定点距离
+//        CGFloat xMid = center_x - _x;
+//        CGFloat yMid = SIZE.width - center_y-_y;
+//        NSLog(@"xmid %f ymid %f",xMid,yMid);
+//        viewport_width = width;
+//        viewport_height = height;
+//        _x =  center_x - xMid*pinch.scale/lastpinch_scale;
+//        _y =  (SIZE.width-center_y)-(yMid*pinch.scale/lastpinch_scale);
         
-        //        //新中心与定点距离
-        //        CGFloat xMid = center_x - (float)_x;
-        //        CGFloat yMid = _videoH - center_y-(float)_y;
-        //
-        //
-        //        _x =  center_x - xMid*pinch.scale/lastpinch_scale;
-        //        _y =  (_videoH-center_y)-(yMid*pinch.scale/lastpinch_scale);
+//        NSLog(@"width %d height %d _x %d _y %d",viewport_width,viewport_height,_x,_y);
         
         if (width<MAX_WIDTH &&height<MAX_HEIGHT) {
             viewport_width = width;
@@ -261,12 +300,15 @@ CGFloat scale = 1.0;
         
         NSLog(@"layoutSubviews");
         
+        viewport_width = self.bounds.size.width*_viewScale;
+        viewport_height = self.bounds.size.height*_viewScale;
         
-        if (viewport_width>_videoW||viewport_height>_videoH) {
-            glViewport(_x, _y, viewport_width, viewport_height);
-        }else
-            glViewport(_x, _y, self.bounds.size.width*_viewScale, self.bounds.size.height*_viewScale);
+        _x = 0;
+        _y = 0;
         
+        [self initViewport];
+        glViewport(_x, _y, viewport_width, viewport_height);
+
     });
 }
 
@@ -305,52 +347,18 @@ CGFloat scale = 1.0;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
--(void)renderViewportX:(int)x Y:(int)y Width:(int)width Heigth:(int)height{
-    [EAGLContext setCurrentContext:_glContext];
-    glViewport(x, y, width, height);
-    
-    static const GLfloat squareVertices[] = {
-        -1.0f, -1.0f,
-        1.0f, -1.0f,
-        -1.0f,  1.0f,
-        1.0f,  1.0f,
-    };
-    
-    static const GLfloat coordVertices[] = {
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        0.0f, 0.0f,
-        1.0f, 0.0f,
-    };
-    
-    
-    // Update attribute values
-    glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, squareVertices);
-    glEnableVertexAttribArray(ATTRIB_VERTEX);
-    
-    
-    glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, 0, 0, coordVertices);
-    glEnableVertexAttribArray(ATTRIB_TEXTURE);
-    
-    
-    // Draw
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
-    [_glContext presentRenderbuffer:GL_RENDERBUFFER];
-}
-
 
 - (void)render
 {
     [EAGLContext setCurrentContext:_glContext];
-    CGSize size = self.bounds.size;
     
-    //    NSLog(@"viewport_width %d viewport_height %d x %d y %d",viewport_width,viewport_height,_x,_y);
+//    NSLog(@"viewport_width %d viewport_height %d x %d y %d",viewport_width,viewport_height,_x,_y);
     
-    if (viewport_width>=_videoW||viewport_height>=_videoH) {
+    if (viewport_width>=SIZE.width*_viewScale||viewport_height>=SIZE.height*_viewScale) {
         glViewport(_x, _y, viewport_width, viewport_height);
     }else{
-        glViewport(0, 0, size.width*_viewScale, size.height*_viewScale);
+        
+        glViewport(0, 0, SIZE.width*_viewScale, SIZE.height*_viewScale);
         scale = 1.0;
     }
     static const GLfloat squareVertices[] = {
@@ -584,8 +592,8 @@ TexCoordOut = TexCoordIn;\
     _videoW = width;
     _videoH = height;
     
-    viewport_width  = _videoW;
-    viewport_height = _videoH;
+//    viewport_width  = _videoW*_viewScale;
+//    viewport_height = _videoH*_viewScale;
     
     void *blackData = malloc(width * height * 1.5);
     if(blackData)

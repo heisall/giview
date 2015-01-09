@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04AA98DC1A5FAE3300EEF9DC /* GlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AA98D91A5FAE3300EEF9DC /* GlView.m */; };
+		04AA98DD1A5FAE3300EEF9DC /* OpenGLView20.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AA98DB1A5FAE3300EEF9DC /* OpenGLView20.m */; };
 		18CD2FAE185C549D00BA43F1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18CD2FAD185C549D00BA43F1 /* OpenGLES.framework */; };
 		18D367A0185C516F0077D563 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D3679F185C516F0077D563 /* Foundation.framework */; };
-		18D367A5185C51700077D563 /* GlView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 18D367A4185C51700077D563 /* GlView.h */; };
-		18D367A7185C51700077D563 /* GlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D367A6185C51700077D563 /* GlView.m */; };
-		AD84CE7A1A5E6EF4002A514A /* OpenGLView20.m in Sources */ = {isa = PBXBuildFile; fileRef = AD84CE791A5E6EF4002A514A /* OpenGLView20.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,21 +20,20 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				18D367A5185C51700077D563 /* GlView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04AA98D81A5FAE3300EEF9DC /* GlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlView.h; sourceTree = "<group>"; };
+		04AA98D91A5FAE3300EEF9DC /* GlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlView.m; sourceTree = "<group>"; };
+		04AA98DA1A5FAE3300EEF9DC /* OpenGLView20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView20.h; sourceTree = "<group>"; };
+		04AA98DB1A5FAE3300EEF9DC /* OpenGLView20.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLView20.m; sourceTree = "<group>"; };
 		18CD2FAD185C549D00BA43F1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		18D3679C185C516F0077D563 /* libGlView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGlView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D3679F185C516F0077D563 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		18D367A3185C51700077D563 /* GlView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GlView-Prefix.pch"; sourceTree = "<group>"; };
-		18D367A4185C51700077D563 /* GlView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlView.h; sourceTree = "<group>"; };
-		18D367A6185C51700077D563 /* GlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlView.m; sourceTree = "<group>"; };
-		AD84CE781A5E6EF4002A514A /* OpenGLView20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView20.h; sourceTree = "<group>"; };
-		AD84CE791A5E6EF4002A514A /* OpenGLView20.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLView20.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +78,10 @@
 		18D367A1185C516F0077D563 /* GlView */ = {
 			isa = PBXGroup;
 			children = (
-				AD84CE781A5E6EF4002A514A /* OpenGLView20.h */,
-				AD84CE791A5E6EF4002A514A /* OpenGLView20.m */,
-				18D367A4185C51700077D563 /* GlView.h */,
-				18D367A6185C51700077D563 /* GlView.m */,
+				04AA98D81A5FAE3300EEF9DC /* GlView.h */,
+				04AA98D91A5FAE3300EEF9DC /* GlView.m */,
+				04AA98DA1A5FAE3300EEF9DC /* OpenGLView20.h */,
+				04AA98DB1A5FAE3300EEF9DC /* OpenGLView20.m */,
 				18D367A2185C51700077D563 /* Supporting Files */,
 			);
 			path = GlView;
@@ -148,8 +146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18D367A7185C51700077D563 /* GlView.m in Sources */,
-				AD84CE7A1A5E6EF4002A514A /* OpenGLView20.m in Sources */,
+				04AA98DC1A5FAE3300EEF9DC /* GlView.m in Sources */,
+				04AA98DD1A5FAE3300EEF9DC /* OpenGLView20.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

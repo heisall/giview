@@ -59,6 +59,8 @@
     
     //最后的scale大小
     CGFloat                 lastpinch_scale;
+    
+//    设备分辨率倍数
     GLsizei                 _viewScale;
 	   
     //void                    *_pYuvData;

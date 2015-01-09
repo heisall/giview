@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#include <pthread.h>
 @interface GlView : NSObject{
 
     id _kxOpenGLView;
@@ -17,6 +17,7 @@
 
 
 -(id)init:(int)decoderWidth withdecoderHeight:(int)decoderHeight withDisplayWidth:(int)width withDisplayHeight:(int)height;
+//-(void)initWithDecoderWidth:(int)decoderWidth decoderHeight:(int)decoderHeight frameSizeWidth:(int)width frameSizeHeight:(int)height;
 
 /**
  *	解码一针之后 YUV显示的方法
@@ -53,4 +54,11 @@
  *
  */
 - (void)clearVideo;
+
+/**
+ 
+ 
+ **/
+-(void)countViewPort;
+
 @end

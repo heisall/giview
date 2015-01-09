@@ -9,25 +9,32 @@
 #import "GlView.h"
 #import "OpenGLView20.h"
 
+#define MIN_LENGTH 10.0
+
+
 @interface GlView (){
 
    pthread_mutex_t        mutex;
+
 }
 
 @end
 @implementation GlView
 
+CGPoint pan_start_point;
+CGPoint pinch_start_point1;
+CGPoint pinch_start_point2;
+CGSize originSize;
+CGPoint originCenter;
+
 @synthesize _kxOpenGLView;
 
 
 -(id)init:(int)decoderWidth withdecoderHeight:(int)decoderHeight withDisplayWidth:(int)width withDisplayHeight:(int)height{
-
     if (self=[super init]) {
         
-        OpenGLView20 *openGlViewObj = [[OpenGLView20 alloc] init];
-        
+        OpenGLView20 *openGlViewObj = [[OpenGLView20 alloc] init];        
         [openGlViewObj setVideoSize:decoderWidth height:decoderHeight];
-        
         self._kxOpenGLView = openGlViewObj;
         
         [self updateDecoderFrame:width displayFrameHeight:height];
@@ -67,12 +74,14 @@
 
     [self lock];
     OpenGLView20 *openGlViewObj = (OpenGLView20 *)self._kxOpenGLView;
-    openGlViewObj.frame   = CGRectMake(openGlViewObj.frame.origin.x, openGlViewObj.frame.origin.y, displayFrameWidth, displayFrameHeight);
+    openGlViewObj.frame = CGRectMake(openGlViewObj.frame.origin.x, openGlViewObj.frame.origin.y, displayFrameWidth, displayFrameHeight);
     [self unlock];
 }
 
 -(void)decoder:(char*)imageBufferY imageBufferU:(char*)imageBufferU imageBufferV:(char*)imageBufferV decoderFrameWidth:(int)decoderFrameWidth decoderFrameHeight:(int)decoderFrameHeight {
 
+    
+//    NSLog(@"decoderFrameWidth %d decoderFrameHeight %d",decoderFrameWidth,decoderFrameHeight);
     NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
     
     [self lock];
@@ -80,7 +89,7 @@
     OpenGLView20 *openGlViewObj = (OpenGLView20 *)self._kxOpenGLView;
     
     [openGlViewObj displayYUV420pData:imageBufferY imageBufferU:imageBufferU imageBufferV:imageBufferV width:decoderFrameWidth height:decoderFrameHeight];
-    
+
     [self unlock];
 
     [pool release];

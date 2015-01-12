@@ -97,8 +97,10 @@ CGPoint pinch_start_point2;
     _viewScale = [UIScreen mainScreen].scale;
     lastpinch_scale = 1.0;
     scale = 1.0;
+    [self removeGestureRecognizer:panGestureRecognizer];
 }
 
+UIPanGestureRecognizer *panGestureRecognizer;
 - (BOOL)doInit
 {
     CAEAGLLayer *eaglLayer = (CAEAGLLayer*) self.layer;
@@ -138,9 +140,9 @@ CGPoint pinch_start_point2;
     [self addGestureRecognizer:pinchGestureRecognizer];
     
     
-    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    panGestureRecognizer.maximumNumberOfTouches = 1;
-    [self addGestureRecognizer:panGestureRecognizer];
+//    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+//    panGestureRecognizer.maximumNumberOfTouches = 1;
+//    [self addGestureRecognizer:panGestureRecognizer];
     
     return YES;
 }
@@ -148,21 +150,19 @@ CGPoint pinch_start_point2;
 CGPoint last_pan_point;
 -(void)handlePanGesture:(UIPanGestureRecognizer *)pan{
     
+    NSLog(@"pan start _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
+
     CGPoint point = [pan translationInView:self];
-//    NSLog(@"point x %f y %f",point.x,point.y);
     
     int max_width = viewport_width - SIZE.width*_viewScale;
     int max_height = viewport_height - SIZE.height*_viewScale;
-    
-//    NSLog(@"max width %d height %d",max_width,max_height);
-//    NSLog(@"%d %d",(_x + ((int)point.x)),(_y - ((int)point.y)));
-    
     
     int tmp_x = _x + (point.x-last_pan_point.x)*_viewScale;
     int tmp_y = _y - (point.y-last_pan_point.y)*_viewScale;
     
 //    NSLog(@"width %d height %d x %d y %d viewport_width %d viewport_heigth %d",max_width,max_height,_x,_y,viewport_width,viewport_height);
 //    NSLog(@"videow %d videoh %d",_videoW,_videoH);
+    
     switch (pan.state) {
         case UIGestureRecognizerStateChanged:
                 _x = tmp_x;
@@ -193,6 +193,7 @@ CGPoint last_pan_point;
         _y = -max_height;
     }
     
+    NSLog(@"pan _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
     [self render];
 }
 
@@ -200,13 +201,12 @@ CGFloat scale = 1.0;
 -(void)didPinchGesture:(UIPinchGestureRecognizer *)pinch
 {
     int touchCount = (int)pinch.numberOfTouches;
-    
-    if (touchCount == 2&&(pinch.state ==UIGestureRecognizerStateBegan||pinch.state==UIGestureRecognizerStateChanged)) {
+    if (touchCount == 2) {
         
         CGPoint p1,p2;
         switch (pinch.state) {
             case UIGestureRecognizerStateBegan:
-                scale = scale*lastpinch_scale;
+//                scale = scale*lastpinch_scale;
                 break;
             case UIGestureRecognizerStateChanged:
                 lastpinch_scale = pinch.scale;
@@ -251,15 +251,39 @@ CGFloat scale = 1.0;
             
         }
         
-        
 //        NSLog(@"center_x %f center_y %f x %d y %d scale %f",center_x,center_y,_x,_y,pinch.scale/lastpinch_scale);
 //        NSLog(@"scale %f last scale %f",pinch.scale,lastpinch_scale);
         
         [self render];
-        
+        NSLog(@"pinch _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
+
     }
     
+    if(pinch.state == UIGestureRecognizerStateEnded){
+        scale = scale*lastpinch_scale;
+        if (scale>1.0) {
+            
+            [self removeGestureRecognizer:panGestureRecognizer];
+            NSLog(@"remove pan gesture");
+            
+            panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+            panGestureRecognizer.maximumNumberOfTouches = 1;
+            
+            NSLog(@"scale(%f) > 1.0 ",scale);
+            if (![self.gestureRecognizers containsObject:panGestureRecognizer]) {
+                NSLog(@"add gesture");
+                [self addGestureRecognizer:panGestureRecognizer];
+            }
+            
+        }else{
+            NSLog(@"scale %f",scale);
+            [self removeGestureRecognizer:panGestureRecognizer];
+            NSLog(@"remove pan gesture");
+            
+        }
+    }
 }
+
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {

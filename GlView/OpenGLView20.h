@@ -73,9 +73,6 @@
 #pragma mark - 接口
 - (void)displayYUV420pData:(char*)imageBufferY imageBufferU:(char*)imageBufferU imageBufferV:(char*)imageBufferV width:(NSInteger)w height:(NSInteger)h;
 
-
--(void)renderViewportX:(int)x Y:(int)y Width:(int)width Heigth:(int)height;
-
 - (void)setVideoSize:(GLuint)width height:(GLuint)height;
 
 -(void)didPinchGesture:(UIPinchGestureRecognizer *)pinch;

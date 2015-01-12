@@ -208,7 +208,7 @@ CGFloat scale = 1.0;
             case UIGestureRecognizerStateBegan:
                 scale = scale*lastpinch_scale;
                 break;
-            case UIGestureRecognizerStateChanged:
+            case UIGestureRecognizerStateEnded:
                 lastpinch_scale = pinch.scale;
                 break;
             default:

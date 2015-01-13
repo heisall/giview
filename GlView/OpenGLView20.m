@@ -72,8 +72,6 @@ enum TextureType
 @end
 
 @implementation OpenGLView20
-CGPoint pinch_start_point1;
-CGPoint pinch_start_point2;
 //- (void)debugGlError
 //{
 //    GLenum r = glGetError();
@@ -81,18 +79,6 @@ CGPoint pinch_start_point2;
 //    {
 //        printf("%d   \n", r);
 //    }
-//}
-
-//-(void)setFrame:(CGRect)frame{
-//    [super setFrame:frame];
-//    [self initViewport];
-//    viewport_width = frame.size.width*_viewScale;
-//    viewport_height = frame.size.height*_viewScale;
-//    _x = 0;
-//    _y = 0;
-//    NSLog(@"viewport width %d heigth %d",viewport_width,viewport_height);
-//    glViewport(_x, _y, viewport_width, viewport_height);
-//
 //}
 
 -(void)initViewport{
@@ -142,9 +128,9 @@ UIPanGestureRecognizer *panGestureRecognizer;
     [self addGestureRecognizer:pinchGestureRecognizer];
     
     
-//    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-//    panGestureRecognizer.maximumNumberOfTouches = 1;
-//    [self addGestureRecognizer:panGestureRecognizer];
+    //    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    //    panGestureRecognizer.maximumNumberOfTouches = 1;
+    //    [self addGestureRecognizer:panGestureRecognizer];
     
     return YES;
 }
@@ -152,8 +138,8 @@ UIPanGestureRecognizer *panGestureRecognizer;
 CGPoint last_pan_point;
 -(void)handlePanGesture:(UIPanGestureRecognizer *)pan{
     
-    NSLog(@"pan start _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
-
+//    NSLog(@"pan start _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
+    
     CGPoint point = [pan translationInView:self];
     
     int max_width = viewport_width - SIZE.width*_viewScale;
@@ -162,17 +148,17 @@ CGPoint last_pan_point;
     int tmp_x = _x + (point.x-last_pan_point.x)*_viewScale;
     int tmp_y = _y - (point.y-last_pan_point.y)*_viewScale;
     
-//    NSLog(@"width %d height %d x %d y %d viewport_width %d viewport_heigth %d",max_width,max_height,_x,_y,viewport_width,viewport_height);
-//    NSLog(@"videow %d videoh %d",_videoW,_videoH);
+    //    NSLog(@"width %d height %d x %d y %d viewport_width %d viewport_heigth %d",max_width,max_height,_x,_y,viewport_width,viewport_height);
+    //    NSLog(@"videow %d videoh %d",_videoW,_videoH);
     
     switch (pan.state) {
         case UIGestureRecognizerStateChanged:
-                _x = tmp_x;
-                _y = tmp_y;
+            _x = tmp_x;
+            _y = tmp_y;
             
             last_pan_point = point;
             break;
-         case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateEnded:
             last_pan_point.x = 0.0;
             last_pan_point.y = 0.0;
             break;
@@ -195,7 +181,7 @@ CGPoint last_pan_point;
         _y = -max_height;
     }
     
-    NSLog(@"pan _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
+//    NSLog(@"pan _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
     [self render];
 }
 
@@ -208,7 +194,7 @@ CGFloat scale = 1.0;
         CGPoint p1,p2;
         switch (pinch.state) {
             case UIGestureRecognizerStateBegan:
-//                scale = scale*lastpinch_scale;
+                //                scale = scale*lastpinch_scale;
                 break;
             case UIGestureRecognizerStateChanged:
                 lastpinch_scale = pinch.scale;
@@ -225,21 +211,21 @@ CGFloat scale = 1.0;
         
         CGFloat width = SIZE.width*_viewScale*scale*pinch.scale;
         CGFloat height = SIZE.height*_viewScale*scale*pinch.scale;
-       
         
-//        center_x = center_x*_viewScale;
-//        center_y = center_y*_viewScale;
-//        NSLog(@"center x %f y %f ",center_x,center_y);
-//        //新中心与定点距离
-//        CGFloat xMid = center_x - _x;
-//        CGFloat yMid = SIZE.width - center_y-_y;
-//        NSLog(@"xmid %f ymid %f",xMid,yMid);
-//        viewport_width = width;
-//        viewport_height = height;
-//        _x =  center_x - xMid*pinch.scale/lastpinch_scale;
-//        _y =  (SIZE.width-center_y)-(yMid*pinch.scale/lastpinch_scale);
         
-//        NSLog(@"width %d height %d _x %d _y %d",viewport_width,viewport_height,_x,_y);
+        //        center_x = center_x*_viewScale;
+        //        center_y = center_y*_viewScale;
+        //        NSLog(@"center x %f y %f ",center_x,center_y);
+        //        //新中心与定点距离
+        //        CGFloat xMid = center_x - _x;
+        //        CGFloat yMid = SIZE.width - center_y-_y;
+        //        NSLog(@"xmid %f ymid %f",xMid,yMid);
+        //        viewport_width = width;
+        //        viewport_height = height;
+        //        _x =  center_x - xMid*pinch.scale/lastpinch_scale;
+        //        _y =  (SIZE.width-center_y)-(yMid*pinch.scale/lastpinch_scale);
+        
+        //        NSLog(@"width %d height %d _x %d _y %d",viewport_width,viewport_height,_x,_y);
         
         if (width<(MAX_WIDTH*_viewScale*TIMES) &&height<(MAX_HEIGHT*_viewScale*TIMES)) {
             viewport_width = width;
@@ -253,12 +239,12 @@ CGFloat scale = 1.0;
             
         }
         
-//        NSLog(@"center_x %f center_y %f x %d y %d scale %f",center_x,center_y,_x,_y,pinch.scale/lastpinch_scale);
-//        NSLog(@"scale %f last scale %f",pinch.scale,lastpinch_scale);
+        //        NSLog(@"center_x %f center_y %f x %d y %d scale %f",center_x,center_y,_x,_y,pinch.scale/lastpinch_scale);
+        //        NSLog(@"scale %f last scale %f",pinch.scale,lastpinch_scale);
         
         [self render];
-        NSLog(@"pinch _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
-
+//        NSLog(@"pinch _x %d _y %d width %d height %d",_x,_y,viewport_width,viewport_height);
+        
     }
     
     if(pinch.state == UIGestureRecognizerStateEnded){
@@ -266,22 +252,16 @@ CGFloat scale = 1.0;
         if (scale>1.0) {
             
             [self removeGestureRecognizer:panGestureRecognizer];
-            NSLog(@"remove pan gesture");
             
             panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
             panGestureRecognizer.maximumNumberOfTouches = 1;
             
-            NSLog(@"scale(%f) > 1.0 ",scale);
             if (![self.gestureRecognizers containsObject:panGestureRecognizer]) {
-                NSLog(@"add gesture");
                 [self addGestureRecognizer:panGestureRecognizer];
             }
             
         }else{
-            NSLog(@"scale %f",scale);
-            [self removeGestureRecognizer:panGestureRecognizer];
-            NSLog(@"remove pan gesture");
-            
+            [self removeGestureRecognizer:panGestureRecognizer];            
         }
     }
 }
@@ -334,7 +314,7 @@ CGFloat scale = 1.0;
         
         [self initViewport];
         glViewport(_x, _y, viewport_width, viewport_height);
-
+        
     });
 }
 
@@ -378,7 +358,7 @@ CGFloat scale = 1.0;
 {
     [EAGLContext setCurrentContext:_glContext];
     
-//    NSLog(@"viewport_width %d viewport_height %d x %d y %d",viewport_width,viewport_height,_x,_y);
+    //    NSLog(@"viewport_width %d viewport_height %d x %d y %d",viewport_width,viewport_height,_x,_y);
     
     if (viewport_width>=SIZE.width*_viewScale||viewport_height>=SIZE.height*_viewScale) {
         glViewport(_x, _y, viewport_width, viewport_height);
@@ -618,8 +598,8 @@ TexCoordOut = TexCoordIn;\
     _videoW = width;
     _videoH = height;
     
-//    viewport_width  = _videoW*_viewScale;
-//    viewport_height = _videoH*_viewScale;
+    //    viewport_width  = _videoW*_viewScale;
+    //    viewport_height = _videoH*_viewScale;
     
     void *blackData = malloc(width * height * 1.5);
     if(blackData)

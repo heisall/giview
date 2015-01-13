@@ -8,9 +8,11 @@
 
 #import "OpenGLView20.h"
 
-#define MIN_LENGTH 4.0
-#define MAX_WIDTH 3000
-#define MAX_HEIGHT 3000
+#define MAX_WIDTH SIZE.width
+#define MAX_HEIGHT SIZE.height
+
+// 放大倍数
+#define TIMES 2.0
 #define SIZE self.bounds.size
 
 enum AttribEnum
@@ -239,7 +241,7 @@ CGFloat scale = 1.0;
         
 //        NSLog(@"width %d height %d _x %d _y %d",viewport_width,viewport_height,_x,_y);
         
-        if (width<MAX_WIDTH &&height<MAX_HEIGHT) {
+        if (width<(MAX_WIDTH*_viewScale*TIMES) &&height<(MAX_HEIGHT*_viewScale*TIMES)) {
             viewport_width = width;
             viewport_height = height;
             

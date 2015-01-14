@@ -77,6 +77,9 @@
 
 -(void)didPinchGesture:(UIPinchGestureRecognizer *)pinch;
 
+//设置最大或最小缩放
+-(void)setScaleToLargest:(BOOL)is FromCenterPoint:(CGPoint)center;
+
 /** 
  清除画面
  */

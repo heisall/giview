@@ -8,8 +8,8 @@
 
 #import "OpenGLView20.h"
 
-#define MAX_WIDTH SIZE.width
-#define MAX_HEIGHT SIZE.height
+#define WIDTH SIZE.width
+#define HEIGHT SIZE.height
 
 // 放大倍数
 #define TIMES 2.0
@@ -127,12 +127,29 @@ UIPanGestureRecognizer *panGestureRecognizer;
     UIPinchGestureRecognizer *pinchGestureRecognizer=[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchGesture:)];
     [self addGestureRecognizer:pinchGestureRecognizer];
     
+//    UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
+//    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
+//    [self addGestureRecognizer:doubleTapGestureRecognizer];
     
     //    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     //    panGestureRecognizer.maximumNumberOfTouches = 1;
     //    [self addGestureRecognizer:panGestureRecognizer];
     
     return YES;
+}
+
+bool largest =  false;
+- (void)doubleTap:(UIGestureRecognizer*)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self];
+    if (!largest) {
+        [self setScaleToLargest:YES FromCenterPoint:point];
+        largest = true;
+    }else{
+        [self setScaleToLargest:NO FromCenterPoint:point];
+        largest = false;
+    }
+    NSLog(@"-----doubleTap-----");
 }
 
 CGPoint last_pan_point;
@@ -227,7 +244,7 @@ CGFloat scale = 1.0;
         
         //        NSLog(@"width %d height %d _x %d _y %d",viewport_width,viewport_height,_x,_y);
         
-        if (width<(MAX_WIDTH*_viewScale*TIMES) &&height<(MAX_HEIGHT*_viewScale*TIMES)) {
+        if (width<(WIDTH*_viewScale*TIMES)&&height<(HEIGHT*_viewScale*TIMES)) {
             viewport_width = width;
             viewport_height = height;
             
@@ -249,23 +266,26 @@ CGFloat scale = 1.0;
     
     if(pinch.state == UIGestureRecognizerStateEnded){
         scale = scale*lastpinch_scale;
-        if (scale>1.0) {
-            
-            [self removeGestureRecognizer:panGestureRecognizer];
-            
-            panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-            panGestureRecognizer.maximumNumberOfTouches = 1;
-            
-            if (![self.gestureRecognizers containsObject:panGestureRecognizer]) {
-                [self addGestureRecognizer:panGestureRecognizer];
-            }
-            
-        }else{
-            [self removeGestureRecognizer:panGestureRecognizer];            
-        }
+        [self addOrDelPangesture];
     }
 }
 
+-(void)addOrDelPangesture{
+    if (scale>1.0) {
+        
+        [self removeGestureRecognizer:panGestureRecognizer];
+        
+        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+        panGestureRecognizer.maximumNumberOfTouches = 1;
+        
+        if (![self.gestureRecognizers containsObject:panGestureRecognizer]) {
+            [self addGestureRecognizer:panGestureRecognizer];
+        }
+        
+    }else{
+        [self removeGestureRecognizer:panGestureRecognizer];
+    }
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -306,8 +326,8 @@ CGFloat scale = 1.0;
         
         NSLog(@"layoutSubviews");
         
-        viewport_width = self.bounds.size.width*_viewScale;
-        viewport_height = self.bounds.size.height*_viewScale;
+        viewport_width = SIZE.width*_viewScale;
+        viewport_height = SIZE.height*_viewScale;
         
         _x = 0;
         _y = 0;
@@ -566,6 +586,38 @@ TexCoordOut = TexCoordIn;\
     
     return shaderHandle;
 }
+
+-(void)setScaleToLargest:(BOOL)is FromCenterPoint:(CGPoint)center{
+    if (is) {
+        scale = TIMES;
+        viewport_width =  WIDTH*TIMES*_viewScale;
+        viewport_height = HEIGHT*TIMES*_viewScale;
+        
+        CGPoint point = [self getNewPoint:center scale:TIMES];
+        _x = point.x;
+        _y = point.y;
+        
+    }else{
+        scale = 1.0;
+        viewport_width = WIDTH*_viewScale;
+        viewport_height = HEIGHT*_viewScale;
+        _x = 0;
+        _y = 0;
+        
+    }
+    [self addOrDelPangesture];
+    [self render];
+}
+
+-(CGPoint)getNewPoint:(CGPoint )centerPoint scale:(CGFloat )scale{
+    CGPoint newPoint;
+    newPoint.x = (centerPoint.x-(centerPoint.x*TIMES))*_viewScale;
+    
+    newPoint.y = ((HEIGHT-centerPoint.y)-(HEIGHT-centerPoint.y)*TIMES)*_viewScale;
+    return newPoint;
+}
+
+
 
 #pragma mark - 接口
 - (void)displayYUV420pData:(char*)imageBufferY imageBufferU:(char*)imageBufferU imageBufferV:(char*)imageBufferV width:(NSInteger)w height:(NSInteger)h

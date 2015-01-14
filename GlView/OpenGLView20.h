@@ -70,6 +70,8 @@
     NSInteger           _frameRate;
 #endif
 }
+@property(nonatomic,readonly)CGFloat scale;
+
 #pragma mark - 接口
 - (void)displayYUV420pData:(char*)imageBufferY imageBufferU:(char*)imageBufferU imageBufferV:(char*)imageBufferV width:(NSInteger)w height:(NSInteger)h;
 

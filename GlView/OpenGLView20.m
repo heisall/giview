@@ -80,7 +80,7 @@ enum TextureType
 //        printf("%d   \n", r);
 //    }
 //}
-
+@synthesize scale;
 -(void)initViewport{
     _viewScale = [UIScreen mainScreen].scale;
     lastpinch_scale = 1.0;
@@ -202,7 +202,6 @@ CGPoint last_pan_point;
     [self render];
 }
 
-CGFloat scale = 1.0;
 -(void)didPinchGesture:(UIPinchGestureRecognizer *)pinch
 {
     int touchCount = (int)pinch.numberOfTouches;
@@ -244,7 +243,7 @@ CGFloat scale = 1.0;
         
         //        NSLog(@"width %d height %d _x %d _y %d",viewport_width,viewport_height,_x,_y);
         
-        if (width<(WIDTH*_viewScale*TIMES)&&height<(HEIGHT*_viewScale*TIMES)) {
+        if (width<(WIDTH*_viewScale*TIMES) &&height<(HEIGHT*_viewScale*TIMES)) {
             viewport_width = width;
             viewport_height = height;
             

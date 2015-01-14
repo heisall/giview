@@ -127,9 +127,9 @@ UIPanGestureRecognizer *panGestureRecognizer;
     UIPinchGestureRecognizer *pinchGestureRecognizer=[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchGesture:)];
     [self addGestureRecognizer:pinchGestureRecognizer];
     
-//    UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
-//    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
-//    [self addGestureRecognizer:doubleTapGestureRecognizer];
+    UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
+    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
+    [self addGestureRecognizer:doubleTapGestureRecognizer];
     
     //    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     //    panGestureRecognizer.maximumNumberOfTouches = 1;
@@ -587,32 +587,67 @@ TexCoordOut = TexCoordIn;\
 }
 
 -(void)setScaleToLargest:(BOOL)is FromCenterPoint:(CGPoint)center{
+    
     if (is) {
+        
         scale = TIMES;
-        viewport_width =  WIDTH*TIMES*_viewScale;
-        viewport_height = HEIGHT*TIMES*_viewScale;
         
-        CGPoint point = [self getNewPoint:center scale:TIMES];
-        _x = point.x;
-        _y = point.y;
+        CGFloat times = 1.0;
+        CGFloat delta = 0.05;
+        int count =(int) (TIMES-times)/delta;
         
+        for (int i=0;i<count;i++) {
+            times = times+delta;
+            viewport_width =  WIDTH*times*_viewScale;
+            viewport_height = HEIGHT*times*_viewScale;
+            
+            CGPoint point = [self getNewPoint:center scale:times];
+            _x = point.x;
+            _y = point.y;
+            [self render];
+        }
+        
+//        viewport_width =  WIDTH*TIMES*_viewScale;
+//        viewport_height = HEIGHT*TIMES*_viewScale;
+//        
+//        CGPoint point = [self getNewPoint:center scale:TIMES];
+//        _x = point.x;
+//        _y = point.y;
+//        [self render];
+
     }else{
         scale = 1.0;
-        viewport_width = WIDTH*_viewScale;
-        viewport_height = HEIGHT*_viewScale;
-        _x = 0;
-        _y = 0;
         
+        CGFloat times = TIMES;
+        CGFloat delta = 0.05;
+        int count =(int) (TIMES-scale)/delta;
+        
+        for (int i=0; i<count; i++) {
+            times = times-delta;
+            viewport_width =  WIDTH*times*_viewScale;
+            viewport_height = HEIGHT*times*_viewScale;
+            
+            CGPoint point = [self getNewPoint:center scale:times];
+            _x = point.x;
+            _y = point.y;
+            [self render];
+        }
+//        viewport_width = WIDTH*_viewScale;
+//        viewport_height = HEIGHT*_viewScale;
+//        _x = 0;
+//        _y = 0;
+//        [self render];
+
     }
+    
     [self addOrDelPangesture];
-    [self render];
 }
 
--(CGPoint)getNewPoint:(CGPoint )centerPoint scale:(CGFloat )scale{
+-(CGPoint)getNewPoint:(CGPoint )centerPoint scale:(CGFloat )scale1{
     CGPoint newPoint;
-    newPoint.x = (centerPoint.x-(centerPoint.x*TIMES))*_viewScale;
+    newPoint.x = (centerPoint.x-(centerPoint.x*scale1))*_viewScale;
     
-    newPoint.y = ((HEIGHT-centerPoint.y)-(HEIGHT-centerPoint.y)*TIMES)*_viewScale;
+    newPoint.y = ((HEIGHT-centerPoint.y)-(HEIGHT-centerPoint.y)*scale1)*_viewScale;
     return newPoint;
 }
 

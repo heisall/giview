@@ -16,7 +16,6 @@
 @interface GlView (){
 
    pthread_mutex_t        mutex;
-
 }
 
 @end
@@ -34,9 +33,10 @@ CGPoint originCenter;
 -(id)init:(int)decoderWidth withdecoderHeight:(int)decoderHeight withDisplayWidth:(int)width withDisplayHeight:(int)height{
     if (self=[super init]) {
         
-        OpenGLView20 *openGlViewObj = [[OpenGLView20 alloc] init];        
+        OpenGLView20 *openGlViewObj          = [[OpenGLView20 alloc] init];
         [openGlViewObj setVideoSize:decoderWidth height:decoderHeight];
-        self._kxOpenGLView = openGlViewObj;
+        self._kxOpenGLView                   = openGlViewObj;
+        openGlViewObj.userInteractionEnabled = FALSE;
         
         [self updateDecoderFrame:width displayFrameHeight:height];
         
@@ -127,7 +127,13 @@ CGPoint originCenter;
     }
 }
 
--(void)setScaleToLargest:(BOOL)isMaxScale FromCenterX:(float)x withCenterY:(float)y{
+/**
+ *  OpenGl画布双击变大（变小）
+ *
+ *  @param x  居中显示的x
+ *  @param y  居中显示的y
+ */
+-(void)setScaleToLargestWithCenterX:(float)x withCenterY:(float)y;{
 
     OpenGLView20 *openGlViewObj = (OpenGLView20 *)self._kxOpenGLView;
     
@@ -137,18 +143,41 @@ CGPoint originCenter;
     point.x = x;
     point.y = y;
     
-    [openGlViewObj setScaleToLargest:isMaxScale FromCenterPoint:point];
+    [openGlViewObj setScaleToLargest:openGlViewObj.scale<=1.0 FromCenterPoint:point];
     
     [self unlock];
 
 }
 
+-(void)restoreGlViewFrame{
+
+    OpenGLView20 *openGlViewObj = (OpenGLView20 *)self._kxOpenGLView;
+    
+    if (openGlViewObj.scale > 1.0) {
+        
+        [self lock];
+        
+        CGPoint point;
+        
+        [openGlViewObj setScaleToLargest:FALSE FromCenterPoint:point];
+        
+        [self unlock];
+    }
+}
+
 /**
- *  清除画布
+ *  设置GLView是否允许手势交互
  *
- *	@param	displayFrameWidth	更新画布的高
- *	@param	displayFrameHeight	更新画布的宽
+ *  @param enabled YES:允许
  */
+-(void)setOpenGLViewUserInteractionEnabled:(BOOL)enabled{
+
+    OpenGLView20 *openGlViewObj          = (OpenGLView20 *)self._kxOpenGLView;
+
+    openGlViewObj.userInteractionEnabled = enabled;
+}
+
+
 - (void)clearVideo {
 
     OpenGLView20 *openGlViewObj = (OpenGLView20 *)self._kxOpenGLView;

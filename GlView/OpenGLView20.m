@@ -247,11 +247,13 @@ CGPoint last_pan_point;
             viewport_width = width;
             viewport_height = height;
             
-            int x = center_x*(1.0-scale*pinch.scale)*1.1;
-            int y = center_y*(1.0-scale*pinch.scale)*1.1;
+//            int x = center_x*(1.0-scale*pinch.scale)*1.1;
+//            int y = center_y*(1.0-scale*pinch.scale)*1.1;
             
-            _x = x;
-            _y = y;
+            
+            CGPoint point =[self getNewPoint:CGPointMake(center_x, center_y) scale:scale*pinch.scale];
+            _x = point.x;
+            _y = point.y;
             
         }
         

@@ -38,7 +38,6 @@
  */
 -(void)updateDecoderFrame:(int)displayFrameWidth displayFrameHeight:(int)displayFrameHeight;
 
-
 /**
  *  隐藏OpenGL画布
  */
@@ -49,8 +48,25 @@
  */
 -(void)showWithOpenGLView;;
 
+/**
+ *  OpenGl画布双击变大（变小）
+ *
+ *  @param x  居中显示的x
+ *  @param y  居中显示的y
+ */
+-(void)setScaleToLargestWithCenterX:(float)x withCenterY:(float)y;
 
--(void)setScaleToLargest:(BOOL)isMaxScale FromCenterX:(float)x withCenterY:(float)y;
+/**
+ *  设置GLView是否允许手势交互
+ *
+ *  @param enabled YES:允许
+ */
+-(void)setOpenGLViewUserInteractionEnabled:(BOOL)enabled;
+
+/**
+ *  还原GL画布
+ */
+-(void)restoreGlViewFrame;
 
 /**
  *  清除画布

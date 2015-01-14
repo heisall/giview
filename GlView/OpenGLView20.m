@@ -127,13 +127,13 @@ UIPanGestureRecognizer *panGestureRecognizer;
     UIPinchGestureRecognizer *pinchGestureRecognizer=[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchGesture:)];
     [self addGestureRecognizer:pinchGestureRecognizer];
     
-    UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
-    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
-    [self addGestureRecognizer:doubleTapGestureRecognizer];
+//    UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
+//    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
+//    [self addGestureRecognizer:doubleTapGestureRecognizer];
     
-    //    panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    //    panGestureRecognizer.maximumNumberOfTouches = 1;
-    //    [self addGestureRecognizer:panGestureRecognizer];
+        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+        panGestureRecognizer.maximumNumberOfTouches = 1;
+        [self addGestureRecognizer:panGestureRecognizer];
     
     return YES;
 }

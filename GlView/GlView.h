@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <pthread.h>
+
 @interface GlView : NSObject{
 
     id _kxOpenGLView;
@@ -47,18 +47,15 @@
 /**
  *  显示OpenGL画布
  */
--(void)showWithOpenGLView;
+-(void)showWithOpenGLView;;
+
+
+-(void)setScaleToLargest:(BOOL)isMaxScale FromCenterX:(float)x withCenterY:(float)y;
 
 /**
  *  清除画布
  *
  */
 - (void)clearVideo;
-
-/**
- 
- 
- **/
--(void)countViewPort;
 
 @end

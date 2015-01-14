@@ -8,6 +8,7 @@
 
 #import "GlView.h"
 #import "OpenGLView20.h"
+#include <pthread.h>
 
 #define MIN_LENGTH 10.0
 
@@ -124,6 +125,22 @@ CGPoint originCenter;
             [[openGlViewObj superview] bringSubviewToFront:openGlViewObj];
         }
     }
+}
+
+-(void)setScaleToLargest:(BOOL)isMaxScale FromCenterX:(float)x withCenterY:(float)y{
+
+    OpenGLView20 *openGlViewObj = (OpenGLView20 *)self._kxOpenGLView;
+    
+    [self lock];
+    
+    CGPoint point;
+    point.x = x;
+    point.y = y;
+    
+    [openGlViewObj setScaleToLargest:isMaxScale FromCenterPoint:point];
+    
+    [self unlock];
+
 }
 
 /**

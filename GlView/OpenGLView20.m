@@ -131,9 +131,9 @@ UIPanGestureRecognizer *panGestureRecognizer;
 //    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
 //    [self addGestureRecognizer:doubleTapGestureRecognizer];
     
-        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-        panGestureRecognizer.maximumNumberOfTouches = 1;
-        [self addGestureRecognizer:panGestureRecognizer];
+//        panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+//        panGestureRecognizer.maximumNumberOfTouches = 1;
+//        [self addGestureRecognizer:panGestureRecognizer];
     
     return YES;
 }
